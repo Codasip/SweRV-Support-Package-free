@@ -60,8 +60,8 @@ After that the specified user must logout and login again for these actions to t
 
 Clone the repository and change directory to the repository root.
 ```
-$ git clone git@github.com/Codasip/ssp-free.git
-$ cd sspfree
+$ git clone https://github.com/Codasip/SweRV-Support-Package-free
+$ cd SweRV-Support-Package-free
 ```
 
 Run the loader script. Any arguments passed to loader script are forwarded to Docker engine, more specifically to the `docker run` command. If you wish to view all available options, refer to the help using `docker run --help` command. 
