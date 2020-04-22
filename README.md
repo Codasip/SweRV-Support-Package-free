@@ -15,13 +15,13 @@ SweRV Support Package (SSP) is a collection of RTL code, software, tools, docume
 and other resources that are needed to implement designs for SweRV-based SoCs,
 test them and write software that will run on such SoCs.
 
-SSP is developed by Codasip GmbH, and its basic version is available for download and use
-free of charge.
+SSP is developed by Codasip GmbH, and its basic version is available for download and use free of charge. 
 
-SSP is delivered in the form of a Docker image to ensure portability across various platforms
-and reliable execution of the provided tools. The initial download of
+SSP is delivered in the form of a Docker image to ensure portability across various platforms and reliable execution of the provided tools. The initial download of
 the SSP Docker image is accomplished through so called "loader script", available
 in this repository.
+
+There is a [Forum](https://forum.codasip.com/) to support SSP and SweRV core family users.
 
 ### What is Docker
 
