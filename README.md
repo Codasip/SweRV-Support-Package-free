@@ -213,7 +213,7 @@ This commands creates the directory structure of SSP and unpacks all software an
 
 You may be asked for the path to your GNU toolchain and Vivado installation directories and their versions.
 This information is used to generate appropriate environment modules properly. If you are not going to use environment modules,
-just press Return to continue. When `cpm init` command completes, SSP is ready to be used.
+just type "." and press Return to continue. When `cpm init` command completes, SSP is ready to be used.
 
 ### SSP Documentation
 
