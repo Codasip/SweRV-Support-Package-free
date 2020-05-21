@@ -1,32 +1,73 @@
-#!/bin/sh
-CONFIG_FILE="loader.cfg"
+#!/bin/bash
+CONFIG_FILE='loader.cfg'
 
-# Check docker is installed by running version check.
-docker --version 2>&1 1>/dev/null
-if [ $? -ne 0 ]; then
-   echo -e "\n\e[91m[ERROR]\033[0m Docker is not installed. Please follow official documentation @ https://www.docker.com/get-started"
-   exit 1 
-fi
+# https://stackoverflow.com/a/20816534
+SCRIPTNAME="${0##*/}"
+warn() {
+    printf >&2 "\e[91m[ERROR]\033[0m %s: $*\n" "$SCRIPTNAME"
+}
 
-# Check config file exists, if yes then get docker image url.
-if [ -f $CONFIG_FILE ]; then
-   IMAGE_NAME=$(sed -n 's/image=\(.*\)/\1/p' < $CONFIG_FILE)
+iscmd() {
+    command -v >&- "$@"
+}
+
+checkdeps() {
+    local -i not_found
+    for cmd; do
+        iscmd "$cmd" || { 
+            warn $"$cmd not found"
+            let not_found++
+        }
+    done
+    (( not_found == 0 )) || {
+        warn $"Install dependencies listed above to use $SCRIPTNAME"
+        exit 1
+    }
+}
+# ===
+
+getlocation() {
+   LOCATION=$(curl -s https://ipvigilante.com/"$(curl -s https://ipinfo.io/ip)" | jq .data.country_name)
+   printf "\e[33m[INFO]\033[0m Your location is: %s\t" "$LOCATION"
+}
+
+# Check docker, curl and jq are installed
+checkdeps curl docker jq
+
+# Check config file exists, if yes then get docker image url - based on location
+if [ -f "$CONFIG_FILE" ]; then
+   getlocation
+   # Uncommend line bellow if you encouter problem with using Loader from China
+   # LOCATION='"China"'
+   
+   printf "Downloading from: %s\n" "$LOCATION"
+   # shellcheck disable=SC1090
+   . $CONFIG_FILE
+   # shellcheck disable=SC2154
+   if [ "$LOCATION" == '"China"' ]; then
+      printf "\e[33m[INFO]\033[0m Using chineese repository\n"
+      IMAGE_NAME="$imagecn"
+   else
+      printf "\e[33m[INFO]\033[0m Using worldwide repository\n"
+      IMAGE_NAME="$image"
+   fi
 else
-   echo -e "\n\e[91m[ERROR]Configuration file $CONFIG_FILE has not been found. Cannot continue.\033[0m"
+   printf "\e[91m[ERROR]\033[0m Configuration file %s has not been found. Cannot continue.\n" "$CONFIG_FILE"
    exit 1
 fi
 
 # Check user has access rights for docker.
-docker info 1>/dev/null
-if [ $? -ne 0 ]; then
-   echo -e "\n\e\e[33m[INFO]\033[0m[91mDocker is not properly configured. Either docker host is not properly set or you don't have required privileges. Please follow post-installation guide https://docs.docker.com/install/linux/linux-postinstall/.\033[0m"
+docker info 1>/dev/null 2>&1
+if [ "$?" -ne 0 ]; then
+   printf "\e[33m[ERROR]\033[0m[91m Docker is not properly configured. Either docker host is not properly set or you don't have required privileges. Please follow post-installation guide https://docs.docker.com/install/linux/linux-postinstall/.\033[0m\n"
    exit 1
 fi
 
 # Pull docker image.
-echo -e "\n\e[33m[INFO]\033[0mPulling \e[92m$IMAGE_NAME\033[0m"
-docker pull $IMAGE_NAME || ( echo -e "\e[91m[ERROR]Could not pull image:\033[0m ${IMAGE_NAME}" && exit 1 )
+printf "\e[33m[INFO]\033[0m Pulling \e[92m%s\033[0m\n" "$IMAGE_NAME"
+docker pull "$IMAGE_NAME" || { printf "\e[91m[ERROR]\033[0m Could not pull image: %s\n" "$IMAGE_NAME"; exit 1; }
+
 
 # Run image with commands from args. For more info see README.md.
-echo -e "\n\e[33m[INFO]\033[0mStarting \e[92m$IMAGE_NAME\033[0m"
-docker run $@ $IMAGE_NAME
+printf "\e[33m[INFO]\033[0m Starting \e[92m%s\033[0m\n" "$IMAGE_NAME"
+docker run "$@" "$IMAGE_NAME"
