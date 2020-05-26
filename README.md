@@ -302,6 +302,22 @@ It is intended for those who are going to develop their own packages which can t
 
 ## Frequently asked questions
 
+### I have encountered issues during running docker - error message says "No package curl/jq available"
+
+As of 1.1, loader requires both curl and jq packages to be installed in order to work.
+1. **Centos7:**  
+    * `sudo yum -y update`  
+    * `sudo yum -y install epel-release`  
+    * `sudo yum -y install curl jq`  
+  
+2. **Ubuntu 14+/Debian:**  
+    * `sudo apt-get update`  
+    * `sudo apt-get -y install curl jq`  
+  
+3. **Fedora:**  
+    * `sudo dnf update`  
+    * `sudo dnf install curl jq`
+  
 ### How to configure Docker host and client for operation over network
 
 In case you will be running SSP on your local computer and `root` permissions are available, no further configuration of Docker is necessary.

@@ -59,7 +59,7 @@ fi
 # Check user has access rights for docker.
 docker info 1>/dev/null 2>&1
 if [ "$?" -ne 0 ]; then
-   printf "\e[33m[ERROR]\033[0m[91m Docker is not properly configured. Either docker host is not properly set or you don't have required privileges. Please follow post-installation guide https://docs.docker.com/install/linux/linux-postinstall/.\033[0m\n"
+   printf "\e[91m[ERROR]\033[0m Docker is not properly configured. Either docker host is not properly set or you don't have required privileges. Please follow post-installation guide https://docs.docker.com/install/linux/linux-postinstall/.\033[0m\n"
    exit 1
 fi
 
