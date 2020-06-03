@@ -15,7 +15,7 @@ SweRV Support Package (SSP) is a collection of RTL code, software, tools, docume
 and other resources that are needed to implement designs for SweRV-based SoCs,
 test them and write software that will run on such SoCs.
 
-SSP is developed by Codasip GmbH, and its basic version is available for download and use free of charge. 
+SSP is developed by Codasip GmbH, and its basic version is available for download and use free of charge.
 
 SSP is delivered in the form of a Docker image to ensure portability across various platforms and reliable execution of the provided tools. The initial download of
 the SSP Docker image is accomplished through so called "loader script", available
@@ -31,7 +31,7 @@ In short, Docker is a containerization tool that allows to execute programs in i
 
 The main terms related to Docker are:
 
-* _Docker container_ - An isolated Docker environment that can be regarded as lightweight "virtual machine". It is a running instance of Docker image. It has its own file system and processes executed in container that run in isolation from the rest of the host operating system.
+* _Docker container_ - An isolated Docker environment that can be regarded as a lightweight "virtual machine". It is a running instance of Docker image. It has its own file system and processes executed in container that run in isolation from the rest of the host operating system.
 * _Docker image_ - A snapshot (template) used to create a Docker container.
 
 SSP is distributed as a Docker image.
@@ -53,7 +53,7 @@ if not installed already.
 A recommended way to install Docker is to follow official guidelines - [Docker installation guide].
 
 Alternatively, you can install Docker through the package manager of your Linux distribution.
-However, this is not recommended as it may install an outdated version of Docker.  
+However, this is not recommended as it may install an outdated version of Docker.
 
 On Debian Jessie/Debian Stretch/Ubuntu:
 
@@ -104,8 +104,8 @@ To create and start SSP Docker container, run the loader with the following argu
 
 `$ ./loader.sh -i -t --name <container_name> -p <host_port>:22`
 
-`-i` and `-t` arguments ensure that the container will be started in interactive mode. This is the usual mode user runs the docker in, as opoosed to running docker in the background.  
-`--name` defines the identifier which can be later used to reference the started container. Note that the name must be unique for each container.  
+`-i` and `-t` arguments ensure that the container will be started in interactive mode. This is the usual mode user runs the docker in, as opoosed to running docker in the background.
+`--name` defines the identifier which can be later used to reference the started container. Note that the name must be unique for each container.
 
 If you wish to start the Docker container in the background, run the loader script as follows:
 
@@ -125,15 +125,15 @@ Note that loader script is supposed to be used only for the first time you run s
 
 ### Updating SSP image
 
-SSP loader image reads the version of the SSP Docker image from the `loader.cfg` file which is located in the same directory as the loader script.  
-To use different image than the default one, please update the image reference in `loader.cfg`. However, in typical cases when the latest relese of
+SSP loader image reads the version of the SSP Docker image from the `loader.cfg` file which is located in the same directory as the loader script.
+To use different image than the default one, please update the image reference in `loader.cfg`. However, in typical cases when the latest release of
 the SSP image is required, `loader.cfg` needs not be edited.
 
 To display all available versions of the SSP, please view our Codasip Docker registry. Visit [Explore Codasip public docker registry](https://ssp-docker-registry.codasip.com/explore) and enter the name of SSP docker image.
 For free distribution, the SSP image name is `distrib-ssp-seh1-free`.
 
 Then you can click on the version you want to use, which will copy `docker pull` command into your clipboard.
-In order to use that SSP Docker image, paste the image reference from your clipboard to `loader.cfg` file (without the `docker pull`. )    
+In order to use that SSP Docker image, paste the image reference from your clipboard to `loader.cfg` file (without the `docker pull`. )
 
 ## Interaction with Docker container
 
@@ -162,7 +162,7 @@ You can specify as many volumes as you desire.
 
 ### Copy files between host and running container
 
-There are three ways how to get files into running a container:
+There are three ways how to get files into a running container:
 
 1. Network copying - To copy over network over a SSH connection, you can use `scp` command. Note that Docker container must be already started with forwarded SSH port (22).
 2. Host to container copying - Docker allows to copy files directly from Docker host into the container and vice versa. To do this, use the command [docker cp]. Note that to reference the container you must use the `container_name` specified by `--name` argument which can be passed to loader script.
@@ -182,11 +182,11 @@ To attach the terminal to a running container, use this command:
 2. do I need to work with the FPGA board attached via USB to my host ?
 3. do I need my favourite shell environment setup inside the container ?
 
-Standard sspuser has got UID:GID 1000:1000. This can introduce some permissions problem or collisions in case you want to use mounted disk drive from your host or from the NAS. It is an advantage to create specific user with the desired UID:GID inside the container to avoid this problem.
+Standard sspuser has got UID:GID 1000:1000. This can introduce some problems with permissions or collisions in case you want to use mounted disk drive from your host or from the NAS. It is an advantage to create specific user with the desired UID:GID inside the container to avoid this problem.
 
-Read/Write acces to the FPGA board attached to your host via USB is  granted to root:root by default. It means container default user `sspuser` will not be able to write (program) your FPGA. Note that the container does not support hot plug. Therefore you have to write rule file allowing user access for the UDEV daemon and then start your docker container to see the desired effect.
+Read/Write access to the FPGA board attached to your host via USB is  granted to root:root by default. It means container default user `sspuser` will not be able to write (program) your FPGA. Note that the container does not support hot plug. Therefore you have to write rule file allowing user access for the UDEV daemon and then start your docker container to see the desired effect.
 
-To get your favourite shell environment you have to source your prefered setup file(s) inside the container.
+To get your favourite shell environment you have to source your preferred setup file(s) inside the container.
 
 As can be seen, you may need to start container several times. Therefore it is desired to automate container initialization as much as possible. This can be achieved e.g. by uploading and executing your shell scripts.
 
@@ -279,7 +279,7 @@ in Eclipse IDE, configured directly for SweRV EH1 or SweRVolf.
 
 This document describes how to configure and use Whisper instruction set simulator (ISS)
 developed by Western Digital. Whisper ISS is typically used as a golden reference
-for verification of SweRV EH1. This document also shows how to run a simple in Whisper ISS
+for verification of SweRV EH1. This document also shows how to run a simple example in Whisper ISS
 in a standalone mode.
 
 #### infra-tools-doc_cpm_user_guide.pdf
@@ -305,19 +305,19 @@ It is intended for those who are going to develop their own packages which can t
 ### I have encountered issues during running docker - error message says "No package curl/jq available"
 
 As of 1.1, loader requires both curl and jq packages to be installed in order to work.
-1. **Centos7:**  
-    * `sudo yum -y update`  
-    * `sudo yum -y install epel-release`  
-    * `sudo yum -y install curl jq`  
-  
-2. **Ubuntu 14+/Debian:**  
-    * `sudo apt-get update`  
-    * `sudo apt-get -y install curl jq`  
-  
-3. **Fedora:**  
-    * `sudo dnf update`  
+1. **Centos7:**
+    * `sudo yum -y update`
+    * `sudo yum -y install epel-release`
+    * `sudo yum -y install curl jq`
+
+2. **Ubuntu 14+/Debian:**
+    * `sudo apt-get update`
+    * `sudo apt-get -y install curl jq`
+
+3. **Fedora:**
+    * `sudo dnf update`
     * `sudo dnf install curl jq`
-  
+
 ### How to configure Docker host and client for operation over network
 
 In case you will be running SSP on your local computer and `root` permissions are available, no further configuration of Docker is necessary.
