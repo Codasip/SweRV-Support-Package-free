@@ -47,19 +47,27 @@ Alternatively, you can install Docker through the package manager of your Linux 
 
 On Debian Jessie/Debian Stretch/Ubuntu:
 
-`$ sudo apt install docker`
+```sh
+sudo apt install docker
+```
 
 On Debian Buster:
 
-`$ sudo apt install docker.io`
+```sh
+sudo apt install docker.io
+```
 
 On Fedora:
 
-`$ sudo dnf install docker`
+```sh
+sudo dnf install docker
+```
 
 On CentOS/RHEL OS:
 
-`$ sudo yum install docker`
+```sh
+sudo yum install docker
+```
 
 If you intend to run SSP Docker directly on your own workstation, no further configuration is needed. If it is required to run Docker containers on a different host machine over the network, please refer to the "FAQ" section below - [Configuring Docker Host](#how-to-configure-docker-host-and-client-for-operation-over-network).
 
@@ -67,9 +75,9 @@ If you intend to run SSP Docker directly on your own workstation, no further con
 
 To run the Docker commands as a non-root, on some systems, it may be necessary for user to be a member of a system group called `docker`. This can be done using these commands:
 
-```bash
-$ sudo groupadd docker
-$ sudo usermod -aG docker <username>
+```sh
+sudo groupadd docker
+sudo usermod -aG docker <username>
 ```
 
 After this operation, it is necessary to log-out this user and log back in for the changes to take effect.
@@ -78,23 +86,27 @@ After this operation, it is necessary to log-out this user and log back in for t
 
 Clone this repository and change to the directory with the cloned repository contents.
 
-```bash
-$ git clone https://github.com/Codasip/SweRV-Support-Package-free
-$ cd SweRV-Support-Package-free
+```sh
+git clone https://github.com/Codasip/SweRV-Support-Package-free
+cd SweRV-Support-Package-free
 ```
 
 Run the loader script. Any arguments passed to loader script are forwarded to Docker engine, more specifically to the `docker run` command. If you wish to view all available options, refer to the help using `docker run --help` command.
 
 To create and start SSP Docker container, run the loader with the following arguments:
 
-`$ ./loader.sh -i -t --name <container_name> -p <host_port>:22`
+```sh
+./loader.sh -i -t --name <container_name> -p <host_port>:22
+```
 
 `-i` and `-t` arguments ensure that the container will be started in interactive mode. This is the usual mode user runs the docker in, as opoosed to running docker in the background.
 `--name` defines the identifier which can be later used to reference the started container. Note that the name must be unique for each container.
 
 If you wish to start the Docker container in the background, run the loader script as follows:
 
-`$ ./loader.sh -d -t --name <container_name>`
+```sh
+./loader.sh -d -t --name <container_name>
+```
 
 After running the loader, the SSP container will be created and started for you. The SSP environment is based on CentOS 7 Linux distribution. You will be logged in as user with name `sspuser`. Note that `sspuser` can install software or perform privileged operations via `sudo`.
 
@@ -123,19 +135,25 @@ To execute graphical applications (GUI programs) from SSP, you need to be connec
 
 The SSP container automatically starts SSH daemon on startup. In order to connect to the SSP container via SSH, forward TCP port 22 from your Docker a certain port of the host system. This can be done when running the loader script.
 
-`$ ./loader.sh -p <host_port>:22 [...]`
+```sh
+./loader.sh -p <host_port>:22 [...]
+```
 
 You can also enable the port forwarding anytime later, when starting new container created from saved Docker image.
 
 SSP contains preinstalled X-Server, therefore you are able to run graphical applications via SSH. To connect to server with X-server support, run the ssh client with argument `-X`:
 
-`$ ssh -X -p <host_port> sspuser@<host_ip>`
+```sh
+ssh -X -p <host_port> sspuser@<host_ip>
+```
 
 ### Mounting of volumes
 
 Docker supports mounting a volume directly from host into the Docker container. This is very convenient when you want to share the workspace between host machine and any container. You can specify as many volumes as you desire.
 
-`$ ./loader.sh -v <host_path>:<container_path> [...]`
+```sh
+./loader.sh -v <host_path>:<container_path> [...]
+```
 
 ### Copy files between host and running container
 
@@ -151,7 +169,9 @@ When the container exits, its persistent data are kept stored in the stopped con
 
 To attach the terminal to a running container, use this command:
 
-`$ docker exec -i -t <container_name> bash`
+```sh
+docker exec -i -t <container_name> bash
+```
 
 ## Using container
  First step is to start the docker container. Before you proceed you have to consider following issues:
@@ -173,7 +193,9 @@ You want to use container distrib-ssp-seh1-free:1.0.0
 * with container access to the host USB to work with the FPGA board
 * to mount network or host disk drive
 
-`$ docker run -it --rm --privileged -p 22 ssp-docker-registry.codasip.com/free/distrib-ssp-seh1-free:1.0.0`
+```sh
+docker run -it --rm --privileged -p 22 ssp-docker-registry.codasip.com/free/distrib-ssp-seh1-free:1.0.0
+```
 
 ## SSP - first steps
 
@@ -183,7 +205,9 @@ This section helps you with the first steps with the SSP.
 
 After you have started the SSP container and connected to this container (either through direct terminal access or via SSH `ssh -X sspuser@<container IP>`), please run Codasip package manager to finalize installation:
 
-`$ cpm init`
+```sh
+cpm init
+```
 
 This commands creates the directory structure of SSP and unpacks all software and resources.
 
@@ -193,7 +217,9 @@ You may be asked for the path to your GNU toolchain and Vivado installation dire
 
 For further steps with SSP, please refer to documents located in `/prj/ssp/doc`. The number of documents may vary depending of the packages sets you have installed. Evince PDF viewer included in the container which may be used to read the documentation shipped with SSP:
 
-`$ evince path/to/seh1.pdf`
+```sh
+evince path/to/seh1.pdf
+```
 
 ### Overview of SSP documentation
 
@@ -278,7 +304,9 @@ However if you want to make your Docker host available on your network, you will
 
 Now, all clients which would like to use this machine as a Docker Host, must define the environmental variable `DOCKER_HOST` so Docker will connect to the specified host. For example, if the host's hostname is `dockerhost`, and it was configured to use TLS communication, the clients would need to run:
 
-`$ export DOCKER_HOST=dockerhost:2376`
+```sh
+export DOCKER_HOST=dockerhost:2376
+```
 
 One can also specify host's IP address instead of hostname.
 
@@ -286,7 +314,9 @@ One can also specify host's IP address instead of hostname.
 
 Running GUI applications directly in the SSP terminal is not possible as Docker container does not have any display attached. However, GUI applications can be run using the combination of SSH and X Server. To enable X Server within SSH connection, you need to pass argument `-X` to the `ssh` command:
 
-`$ ssh -X -p <forwarded_port> sspuser@localhost`
+```sh
+ssh -X -p <forwarded_port> sspuser@localhost
+```
 
 After connecting to SSP this way, you can open any graphical application and it will use the Window System of your host.
 
@@ -298,7 +328,7 @@ There might be multiple reasons why the SSH connection does not work properly:
 2. SSP container does not have the TCP port 22 forwarded port from the container to the host. To forward the port, please see the `Connect via SSH` section in this README.
 3. The port you used for the forwarding on the host may already be used by another service. Use `nmap`, `ss` or similar utilities to see the ports that are already in use.
 4. There is another SSP container running on your host with the same port specified.
-5. SSH daemon is not running in the SSP container. Run command `ps aux | grep sshd` to check if daemon is running. If you cannot see the daemon running, you can start it manually by running command `$ /usr/sbin/sshd -D &`. The reason why it is not started may be that you have overridden the startup command of the SSP container.
+5. SSH daemon is not running in the SSP container. Run command `ps aux | grep sshd` to check if daemon is running. If you cannot see the daemon running, you can start it manually by running command `/usr/sbin/sshd -D &`. The reason why it is not started may be that you have overridden the startup command of the SSP container.
 
 ### How to share your changes in SSP with other people
 
@@ -308,19 +338,23 @@ First option is to connect to the SSP container via SSH, so all the changes you 
 
 Second way is to connect to the running container via `docker` command. However this is possible only if other people have access to the host where the docker container is running. You will need to tell them the name of running the container which you would like to share with them. How to specify Docker container name is described in `Starting SSP` section. Then all they need to do is to run command:
 
-`$ docker exec -it <container_name> /bin/bash`
+```sh
+docker exec -it <container_name> /bin/bash
+```
 
 Third option is to export your SSP container and send it to people you want and they will import it on their side, however by using this approach, they will only see the changes you made to SSP before the export. To export the container, run the following commands:
 
-```bash
+```sh
 # Save container as an image which can be exported, pick the <image_name> of your choice
-$ docker commit <container_name> <image_name>
-$ docker save --output <destination> <image_name>
+docker commit <container_name> <image_name>
+docker save --output <destination> <image_name>
 ```
 
 This exports the SSP container to `<destination>` you specify. Now you can send the generated file to anyone you want to share the SSP content with and all they need to do on their side is:
 
-`$ docker load --input <destination>`
+```sh
+docker load --input <destination>
+```
 
 ### How to mount network drive in the SSP
 
