@@ -4,22 +4,15 @@
 
 ### What is SweRV core
 
-**SweRV EH1** Is a high-performance embedded RISC-V processor core (RV32IMC),
-developed by [Western Digital](https://www.westerndigital.com/) and open-sourced
-through [CHIPS Alliance](https://chipsalliance.org/). The RTL code of
-SweRV EH1 is available free of charge on [GitHub](https://github.com/chipsalliance/Cores-SweRV).
+**SweRV EH1** Is a high-performance embedded RISC-V processor core (RV32IMC), developed by [Western Digital](https://www.westerndigital.com/) and open-sourced through [CHIPS Alliance](https://chipsalliance.org/). The RTL code of SweRV EH1 is available free of charge on [GitHub](https://github.com/chipsalliance/Cores-SweRV).
 
 ### What is SweRV Support Package (SSP)
 
-SweRV Support Package (SSP) is a collection of RTL code, software, tools, documentation
-and other resources that are needed to implement designs for SweRV-based SoCs,
-test them and write software that will run on such SoCs.
+SweRV Support Package (SSP) is a collection of RTL code, software, tools, documentation and other resources that are needed to implement designs for SweRV-based SoCs, test them and write software that will run on such SoCs.
 
 SSP is developed by Codasip GmbH, and its basic version is available for download and use free of charge.
 
-SSP is delivered in the form of a Docker image to ensure portability across various platforms and reliable execution of the provided tools. The initial download of
-the SSP Docker image is accomplished through so called "loader script", available
-in this repository.
+SSP is delivered in the form of a Docker image to ensure portability across various platforms and reliable execution of the provided tools. The initial download of the SSP Docker image is accomplished through so called "loader script", available in this repository.
 
 There is a [Forum](https://forum.codasip.com/) to support SSP and SweRV core family users.
 
@@ -40,20 +33,17 @@ Further introduction on Docker can be found in [Docker overview].
 
 ### What is SSP loader
 
-SSP loader is a script that allows you to download SSP Docker image onto your
-workstation and create a SSP Docker container from that image.
+SSP loader is a script that allows you to download SSP Docker image onto your workstation and create a SSP Docker container from that image.
 
 > SSP is currently supported on **Linux only**.
 
 ## Installing Docker
 
-As SSP is distributed as a Docker image, please install Docker on your workstation,
-if not installed already.
+As SSP is distributed as a Docker image, please install Docker on your workstation, if not installed already.
 
 A recommended way to install Docker is to follow official guidelines - [Docker installation guide].
 
-Alternatively, you can install Docker through the package manager of your Linux distribution.
-However, this is not recommended as it may install an outdated version of Docker.
+Alternatively, you can install Docker through the package manager of your Linux distribution. However, this is not recommended as it may install an outdated version of Docker.
 
 On Debian Jessie/Debian Stretch/Ubuntu:
 
@@ -71,23 +61,18 @@ On CentOS/RHEL OS:
 
 `$ sudo yum install docker`
 
-If you intend to run SSP Docker directly on your own workstation, no further
-configuration is needed. If it is required to run Docker containers on
-a different host machine over the network, please refer to the "FAQ" section below -
-[Configuring Docker Host](#how-to-configure-docker-host-and-client-for-operation-over-network).
+If you intend to run SSP Docker directly on your own workstation, no further configuration is needed. If it is required to run Docker containers on a different host machine over the network, please refer to the "FAQ" section below - [Configuring Docker Host](#how-to-configure-docker-host-and-client-for-operation-over-network).
 
 ### Running Docker as non-root
 
-To run the Docker commands as a non-root, on some systems, it may be necessary for user to be a member of
-a system group called `docker`. This can be done using these commands:
+To run the Docker commands as a non-root, on some systems, it may be necessary for user to be a member of a system group called `docker`. This can be done using these commands:
 
 ```bash
 $ sudo groupadd docker
 $ sudo usermod -aG docker <username>
 ```
 
-After this operation, it is necessary to log-out this user and log back in
-for the changes to take effect.
+After this operation, it is necessary to log-out this user and log back in for the changes to take effect.
 
 ## Downloading SSP via loader.sh
 
@@ -111,8 +96,7 @@ If you wish to start the Docker container in the background, run the loader scri
 
 `$ ./loader.sh -d -t --name <container_name>`
 
-After running the loader, the SSP container will be created and started for you. The SSP environment is based on CentOS 7 Linux distribution.
-You will be logged in as user with name `sspuser`. Note that `sspuser` can install software or perform privileged operations via `sudo`.
+After running the loader, the SSP container will be created and started for you. The SSP environment is based on CentOS 7 Linux distribution. You will be logged in as user with name `sspuser`. Note that `sspuser` can install software or perform privileged operations via `sudo`.
 
 Note that loader script is supposed to be used only for the first time you run spp. In the following uses, user should be using common docker commands, described more in the detail [here](#example).
 
@@ -125,15 +109,11 @@ Note that loader script is supposed to be used only for the first time you run s
 
 ### Updating SSP image
 
-SSP loader image reads the version of the SSP Docker image from the `loader.cfg` file which is located in the same directory as the loader script.
-To use different image than the default one, please update the image reference in `loader.cfg`. However, in typical cases when the latest release of
-the SSP image is required, `loader.cfg` needs not be edited.
+SSP loader image reads the version of the SSP Docker image from the `loader.cfg` file which is located in the same directory as the loader script. To use different image than the default one, please update the image reference in `loader.cfg`. However, in typical cases when the latest release of the SSP image is required, `loader.cfg` needs not be edited.
 
-To display all available versions of the SSP, please view our Codasip Docker registry. Visit [Explore Codasip public docker registry](https://ssp-docker-registry.codasip.com/explore) and enter the name of SSP docker image.
-For free distribution, the SSP image name is `distrib-ssp-seh1-free`.
+To display all available versions of the SSP, please view our Codasip Docker registry. Visit [Explore Codasip public docker registry](https://ssp-docker-registry.codasip.com/explore) and enter the name of SSP docker image. For free distribution, the SSP image name is `distrib-ssp-seh1-free`.
 
-Then you can click on the version you want to use, which will copy `docker pull` command into your clipboard.
-In order to use that SSP Docker image, paste the image reference from your clipboard to `loader.cfg` file (without the `docker pull`. )
+Then you can click on the version you want to use, which will copy `docker pull` command into your clipboard. In order to use that SSP Docker image, paste the image reference from your clipboard to `loader.cfg` file (without the `docker pull`. )
 
 ## Interaction with Docker container
 
@@ -141,22 +121,19 @@ In order to use that SSP Docker image, paste the image reference from your clipb
 
 To execute graphical applications (GUI programs) from SSP, you need to be connected to SSP via SSH with X11 forwarding enabled.
 
-The SSP container automatically starts SSH daemon on startup. In order to connect to the SSP container via SSH,
-forward TCP port 22 from your Docker a certain port of the host system. This can be done when running the loader script.
+The SSP container automatically starts SSH daemon on startup. In order to connect to the SSP container via SSH, forward TCP port 22 from your Docker a certain port of the host system. This can be done when running the loader script.
 
 `$ ./loader.sh -p <host_port>:22 [...]`
 
 You can also enable the port forwarding anytime later, when starting new container created from saved Docker image.
 
-SSP contains preinstalled X-Server, therefore you are able to run graphical applications via SSH.
-To connect to server with X-server support, run the ssh client with argument `-X`:
+SSP contains preinstalled X-Server, therefore you are able to run graphical applications via SSH. To connect to server with X-server support, run the ssh client with argument `-X`:
 
 `$ ssh -X -p <host_port> sspuser@<host_ip>`
 
 ### Mounting of volumes
 
-Docker supports mounting a volume directly from host into the Docker container. This is very convenient when you want to share the workspace between host machine and any container.
-You can specify as many volumes as you desire.
+Docker supports mounting a volume directly from host into the Docker container. This is very convenient when you want to share the workspace between host machine and any container. You can specify as many volumes as you desire.
 
 `$ ./loader.sh -v <host_path>:<container_path> [...]`
 
@@ -204,23 +181,17 @@ This section helps you with the first steps with the SSP.
 
 ### SSP initialization
 
-After you have started the SSP container and connected to this container (either through direct terminal access
-or via SSH `ssh -X sspuser@<container IP>`), please run Codasip package manager to finalize installation:
+After you have started the SSP container and connected to this container (either through direct terminal access or via SSH `ssh -X sspuser@<container IP>`), please run Codasip package manager to finalize installation:
 
 `$ cpm init`
 
 This commands creates the directory structure of SSP and unpacks all software and resources.
 
-You may be asked for the path to your GNU toolchain and Vivado installation directories and their versions.
-This information is used to generate appropriate environment modules properly. If you are not going to use environment modules,
-just type "." and press Return to continue. When `cpm init` command completes, SSP is ready to be used.
+You may be asked for the path to your GNU toolchain and Vivado installation directories and their versions. This information is used to generate appropriate environment modules properly. If you are not going to use environment modules, just type "." and press Return to continue. When `cpm init` command completes, SSP is ready to be used.
 
 ### SSP Documentation
 
-For further steps with SSP, please refer to documents located in `/prj/ssp/doc`.
-The number of documents may vary depending of the packages sets you have installed.
-Evince PDF viewer included in the container which may be used to read the documentation
-shipped with SSP:
+For further steps with SSP, please refer to documents located in `/prj/ssp/doc`. The number of documents may vary depending of the packages sets you have installed. Evince PDF viewer included in the container which may be used to read the documentation shipped with SSP:
 
 `$ evince path/to/seh1.pdf`
 
@@ -228,77 +199,51 @@ shipped with SSP:
 
 #### seh1.pdf
 
-This document is a modified version of original SweRV EH1 Core TM documentation
-from release 1.5. It contains base description of SEH1 directory tree with
-quick-start examples how to configure SweRV EH1 and how to run simple
-"Hello world" using Verilator simulator.
+This document is a modified version of original SweRV EH1 Core TM documentation from release 1.5. It contains base description of SEH1 directory tree with quick-start examples how to configure SweRV EH1 and how to run simple "Hello world" using Verilator simulator.
 
 #### seh1_RISC-V_SweRV_EH1_PRM.pdf
 
-This document is a comprehensive Programmer's Reference Manual prepared by Western Digital.
-It contains SweRV EH1 core overview, memory maps, register description, power management
-debug control, ICache control, Interrupts etc.
+This document is a comprehensive Programmer's Reference Manual prepared by Western Digital. It contains SweRV EH1 core overview, memory maps, register description, power management debug control, ICache control, Interrupts etc.
 
 #### seh1_SweRV_CoreMark_Benchmarking.pdf
 
-This document by Western Digital contains description and setup that can be
-used to run benchmarks for SweRV EH1 core.
+This document by Western Digital contains description and setup that can be used to run benchmarks for SweRV EH1 core.
 
 #### swervolf.pdf
 
-This document is modified version of original SweRVolf documentation from release 0.6.
-It describes SweRVolf SoC structure, memory map and used peripherals as well as step by step example
-how to run simulation in `verilator` and how to run Zephyr sw application on Digilent Nexys A7
-(or Nexys 4 DDR) FPGA boards.
+This document is modified version of original SweRVolf documentation from release 0.6. It describes SweRVolf SoC structure, memory map and used peripherals as well as step by step example how to run simulation in `verilator` and how to run Zephyr sw application on Digilent Nexys A7 (or Nexys 4 DDR) FPGA boards.
 
 #### swervolf-demo-leds-uart.pdf
 
-In this document a step-by-step description is provided how to run simple application
-program written in C on SweRVolf. This example project can either be compiled in
-command-line or in Eclipse IDE, shipped with SSP.
+In this document a step-by-step description is provided how to run simple application program written in C on SweRVolf. This example project can either be compiled in command-line or in Eclipse IDE, shipped with SSP.
 
 #### swervolf-demo-freertos.pdf
 
-Similarly to the previous document, this PDF contains description of another
-software demo that shows how to run FreeRTOS-based appliations on SweRVolf.
-Step-by-step instructions for compilation and use are also included.
+Similarly to the previous document, this PDF contains description of another software demo that shows how to run FreeRTOS-based appliations on SweRVolf. Step-by-step instructions for compilation and use are also included.
 
 #### openocd.pdf
 
-This document provides deeper introduction to OpenOCD for advanced users.
-  suitable version of OpenOCD with an up-to-date RISC-V support is shipped with SSP.
+This document provides deeper introduction to OpenOCD for advanced users. A suitable version of OpenOCD with an up-to-date RISC-V support is shipped with SSP.
 
 #### eclipse-mcu-ide.pdf
 
-This document describes Eclipse CDT IDE (C/C++ Development Tooling) as well as
-a custom Codasip add-on (Codasip SweRV plugin) shipped with SSP.
-Via the Codasip SweRV plugin, users can comfortably create new C projects
-in Eclipse IDE, configured directly for SweRV EH1 or SweRVolf.
+This document describes Eclipse CDT IDE (C/C++ Development Tooling) as well as a custom Codasip add-on (Codasip SweRV plugin) shipped with SSP. Via the Codasip SweRV plugin, users can comfortably create new C projects in Eclipse IDE, configured directly for SweRV EH1 or SweRVolf.
 
 ####  whisper-iss.pdf
 
-This document describes how to configure and use Whisper instruction set simulator (ISS)
-developed by Western Digital. Whisper ISS is typically used as a golden reference
-for verification of SweRV EH1. This document also shows how to run a simple example in Whisper ISS
-in a standalone mode.
+This document describes how to configure and use Whisper instruction set simulator (ISS) developed by Western Digital. Whisper ISS is typically used as a golden reference for verification of SweRV EH1. This document also shows how to run a simple example in Whisper ISS in a standalone mode.
 
 #### infra-tools-doc_cpm_user_guide.pdf
 
-This document describes Codasip Package Manager (cpm) commands and also the directory tree of SSP.
-It is intended for SSP users and administrators who will do the SSP installation and maintenance.
+This document describes Codasip Package Manager (cpm) commands and also the directory tree of SSP. It is intended for SSP users and administrators who will do the SSP installation and maintenance.
 
 #### infra-tools-doc_mgen.pdf
 
-This document describes modulefile generator utility, which is used by cpm init to generate user specific environment modulefiles.
-The concept of environment modules is presented in this document, along with details how to configure them and how to adjust your
-working environment in the shell. This document is intended for SSP users and administrators who will do the SSP installation
-and maintenance.
+This document describes modulefile generator utility, which is used by cpm init to generate user specific environment modulefiles. The concept of environment modules is presented in this document, along with details how to configure them and how to adjust your working environment in the shell. This document is intended for SSP users and administrators who will do the SSP installation and maintenance.
 
 #### infra-tools-doc_cpm_developer_guide.pdf
 
-This document contains comprehensive description of Codasip package manager (cpm) administration files.
-It is intended for those who are going to develop their own packages which can then be integrated into SSP.
-
+This document contains comprehensive description of Codasip package manager (cpm) administration files. It is intended for those who are going to develop their own packages which can then be integrated into SSP.
 
 ## Frequently asked questions
 
@@ -331,8 +276,7 @@ However if you want to make your Docker host available on your network, you will
     * `--host 0.0.0.0:2375` for un-encrypted communication - not recommended.
 1. Save the configuration file and restart the docker service.
 
-Now, all clients which would like to use this machine as a Docker Host, must define the environmental variable `DOCKER_HOST` so Docker will connect to the specified host.
-For example, if the host's hostname is `dockerhost`, and it was configured to use TLS communication, the clients would need to run:
+Now, all clients which would like to use this machine as a Docker Host, must define the environmental variable `DOCKER_HOST` so Docker will connect to the specified host. For example, if the host's hostname is `dockerhost`, and it was configured to use TLS communication, the clients would need to run:
 
 `$ export DOCKER_HOST=dockerhost:2376`
 
