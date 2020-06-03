@@ -74,7 +74,7 @@ On CentOS/RHEL OS:
 If you intend to run SSP Docker directly on your own workstation, no further
 configuration is needed. If it is required to run Docker containers on
 a different host machine over the network, please refer to the "FAQ" section below -
-[Configuring Docker Host](#configuring-docker-host).
+[Configuring Docker Host](#how-to-configure-docker-host-and-client-for-operation-over-network).
 
 ### Running Docker as non-root
 
@@ -196,7 +196,7 @@ You want to use container distrib-ssp-seh1-free:1.0.0
 * with container access to the host USB to work with the FPGA board
 * to mount network or host disk drive
 
-docker run -it --rm --privileged -p 22 ssp-docker-registry.codasip.com/distrib-ssp-seh1-free:1.0.0
+`$ docker run -it --rm --privileged -p 22 ssp-docker-registry.codasip.com/free/distrib-ssp-seh1-free:1.0.0`
 
 ## SSP - first steps
 
