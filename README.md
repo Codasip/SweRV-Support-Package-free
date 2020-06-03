@@ -270,11 +270,11 @@ In case you will be running SSP on your local computer and `root` permissions ar
 However if you want to make your Docker host available on your network, you will need to modify the Docker Daemon service configuration:
 
 1. Open service configuration file `/lib/systemd/system/docker.service`
-1. Find the key `ExecStart`
-1. Add argument:
+2. Find the key `ExecStart`
+3. Add argument:
     * `--host 0.0.0.0:2376` for encrypted communication using TLS, or
     * `--host 0.0.0.0:2375` for un-encrypted communication - not recommended.
-1. Save the configuration file and restart the docker service.
+4. Save the configuration file and restart the docker service.
 
 Now, all clients which would like to use this machine as a Docker Host, must define the environmental variable `DOCKER_HOST` so Docker will connect to the specified host. For example, if the host's hostname is `dockerhost`, and it was configured to use TLS communication, the clients would need to run:
 
@@ -295,10 +295,10 @@ After connecting to SSP this way, you can open any graphical application and it 
 There might be multiple reasons why the SSH connection does not work properly:
 
 1. Your firewall is blocking the connection. Try to check your firewall settings.
-1. SSP container does not have the TCP port 22 forwarded port from the container to the host. To forward the port, please see the `Connect via SSH` section in this README.
-1. The port you used for the forwarding on the host may already be used by another service. Use `nmap`, `ss` or similar utilities to see the ports that are already in use.
-1. There is another SSP container running on your host with the same port specified.
-2. SSH daemon is not running in the SSP container. Run command `ps aux | grep sshd` to check if daemon is running. If you cannot see the daemon running, you can start it manually by running command `$ /usr/sbin/sshd -D &`. The reason why it is not started may be that you have overridden the startup command of the SSP container.
+2. SSP container does not have the TCP port 22 forwarded port from the container to the host. To forward the port, please see the `Connect via SSH` section in this README.
+3. The port you used for the forwarding on the host may already be used by another service. Use `nmap`, `ss` or similar utilities to see the ports that are already in use.
+4. There is another SSP container running on your host with the same port specified.
+5. SSH daemon is not running in the SSP container. Run command `ps aux | grep sshd` to check if daemon is running. If you cannot see the daemon running, you can start it manually by running command `$ /usr/sbin/sshd -D &`. The reason why it is not started may be that you have overridden the startup command of the SSP container.
 
 ### How to share your changes in SSP with other people
 
