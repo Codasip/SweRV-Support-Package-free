@@ -43,7 +43,7 @@ Further introduction on Docker can be found in [Docker overview].
 SSP loader is a script that allows you to download SSP Docker image onto your
 workstation and create a SSP Docker container from that image.
 
-Note: SSP is currently supported on **Linux only**.
+> SSP is currently supported on **Linux only**.
 
 ## Installing Docker
 
