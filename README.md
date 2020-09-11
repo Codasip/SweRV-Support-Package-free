@@ -25,7 +25,7 @@ SSP is delivered in the form of a Docker image to ensure portability across vari
 the SSP Docker image is accomplished through a "loader script" which is available
 in this repository.
 
-There is a [discussion forum](https://forum.codasip.com/) to support SSP and SweRV core family users.
+If you need help, advice, or want to report a bug related to the Support Package or the SweRV cores, please refer to the respective [CHIPS Alliance repository](https://github.com/chipsalliance) and check the existing issues. If none covers your concerns, feel free to open a new one.
 
 ### What is Docker
 
