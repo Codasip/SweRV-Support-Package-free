@@ -10,4 +10,5 @@
 **Updated**
 
 * README.md
+* changelog.md
 
