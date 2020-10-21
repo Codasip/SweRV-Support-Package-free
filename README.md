@@ -71,12 +71,46 @@ There are SweRV Core SoC application examples including a user guide describing 
 SSH access with X11 tunneling as well as use of shared NFS drives allow for collaborative team work in one shared or mutliple individual containers.
 
 ## 1. Step by step SSP installation guide
-1. [Install and run Docker environment on your host](#11-installing-docker)
-2. [Install ssp script on your host](#12-installing-ssp-script)
-3. [Prepare ssp.yaml configuration file for `ssp` script run](#13-prepare-sspyaml-configuration-file-for-ssp-script-run) 
-4. [SSP run](#14-ssp-run)
+1. [Install rules for USB device access (FPGA board, Debug Interface)](#11-installing-rules-for-usb-device-access-fpga-board-debug-interface)
+2. [Install and run Docker environment on your host](#12-installing-docker)
+3. [Install ssp script on your host](#13-installing-ssp-script)
+4. [Prepare ssp.yaml configuration file for `ssp` script run](#14-prepare-sspyaml-configuration-file-for-ssp-script-run) 
+5. [SSP run](#15-ssp-run)
 
-### 1.1. Installing Docker
+### 1.1. Install rules for USB device access (FPGA board, Debug Interface)
+
+It is mandatory to have `mode 0666` access to all USB devices you intend to use in SSP for the development. These rules have to be set before you start Docker container with SSP (e.g. using *ssp run* command), otherwise you will be not able either to program your FPGA board or to run OpenOCD debug within SSP environment. There are 2 typical rules in ./usb-rules.
+```
+97-Olimex-tiny-h.rules      # for ARM USB Tiny-H JTAG interface
+99-nexys-a7.rules           # for Digilent Nexys A7 or Nexys4 DDR FPGA boards
+```
+If you have these devices you can copy and activate the rules as follows:
+```
+$ cd ./usb-rules
+$ sudo cp 97-Olimex-tiny-h.rules /etc/udev/rules.d
+$ sudo cp 99-nexys-a7.rules      /etc/udev/rules.d
+# reload and activate the rules without rebooting your machine
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+```
+Finally you can check whether these devices are really `mode 0666`
+```
+$ lsusb
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 006: ID 0403:6010 Future Technology Devices International, Ltd FT2232C/D/H Dual UART/FIFO IC
+Bus 001 Device 005: ID 15ba:002a Olimex Ltd. ARM-USB-TINY-H JTAG interface
+.
+.
+$ ls -l /dev/bus/usb/001/006
+crw-rw-rw- 1 root root 189, 5 Oct 20 16:49 /dev/bus/usb/001/006
+$ ls -l /dev/bus/usb/001/005
+crw-rw-rw- 1 root plugdev 189, 4 Oct 20 15:56 /dev/bus/usb/001/005
+```
+If you are using different devices you have to adapt *idProduct* and *idVendor* as listed by `lsusb`.
+
+### 1.2. Installing Docker
 
 To run SSP, a Docker client environment must be installed and running on your host. You can install Docker through the package manager of your Linux distribution as follows:
 
@@ -132,7 +166,7 @@ If you want to install the most recent version of Docker client, please use the 
 
 If you intend to run SSP Docker directly on your own workstation, no further configuration is needed. If it is required to run Docker containers on a different host machine over the network, please refer to the "FAQ" section below, [Back to 1. Step by Step SSP Installation Guide TOC](#1-step-by-step-ssp-installation-guide).
 
-### 1.2. Installing SSP script
+### 1.3. Installing SSP script
 `ssp` script pulls the SSP Docker image from central repository or, if already pulled, takes the local Docker image, customizes it using `ssp.yaml` configuration file and launches it. Customized SSP image is stored on local host. If customized image already exists on the local host, it will be simply launched.
 
 ***IMPORTANT:*** Python 3.6+ is required to run SSP. Python version can be checked:
@@ -198,7 +232,7 @@ Options:
 
 [Back to 1. Step by Step SSP Installation Guide TOC](#1-step-by-step-ssp-installation-guide).
 
-### 1.3. Prepare ssp.yaml configuration file for `ssp` script run
+### 1.4. Prepare ssp.yaml configuration file for `ssp` script run
 `ssp.yaml` file is used by `ssp` script to generate and launch customized SSP Docker image. There is an empty `ssp.yaml` file template containing brief description of each item type. Note that you can have several `ssp.yaml` configuration files to generate and run different variants of customized SSP container.
 All the parameters used in `ssp.yaml` are well known from the Unix world, however there are 2 important notes:
 
@@ -338,7 +372,7 @@ export:
 
 [Back to 1. Step by Step SSP Installation Guide TOC](#1-step-by-step-ssp-installation-guide).
 
-### 1.4. SSP run
+### 1.5. SSP run
 #### First SSP run
 If you have successfully completed all 3 previous steps, you can start ssp. You can either go to the SweRV Support Package Free directory where your customized ssp.yaml file already is, or you can set SSP_CONFIG_PATH environment variable to point to the directory containing your customized ssp.yaml and start `ssp run` in any of your work directories. 
 
