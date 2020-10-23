@@ -10,6 +10,10 @@
 
 * README.md - Added description for the rule installation and check
 
+**Fix**
+
+* Fixed "missing module ssp" during first SSP installation
+
 ## 1.0.0
 
 **New**
