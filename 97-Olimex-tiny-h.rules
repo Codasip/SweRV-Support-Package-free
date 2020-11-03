@@ -1,2 +1,0 @@
-# Add permissions to all users to access the FTDI peripheral (mode 0666):
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="15ba", ATTRS{idProduct}=="002a", ATTRS{manufacturer}=="Olimex", MODE="0666", GROUP="plugdev"
