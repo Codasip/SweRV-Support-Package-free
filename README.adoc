@@ -394,9 +394,9 @@ CODASIP_SVS             # svs
 
 ....
 # Source ssp docker image
-from_image: ssp-docker-registry.codasip.com/free/distrib-ssp-seh1-free:3.0.9
+from_image: ssp-docker-registry.codasip.com/free/distrib-ssp-seh1-free:3.0.10
 # Target docker image
-new_image: ssp-free-dev-group:3.0.9
+new_image: ssp-free-dev-group:3.0.10
 
 # NFS drives mounted to /import/eda and /import/prj
 drives:

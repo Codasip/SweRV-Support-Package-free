@@ -1,5 +1,12 @@
 # SSP Launcher
 
+## 1.0.3
+
+**Updated**
+
+* Change README.md to README.adoc, added notes and corrections
+* Example yaml changed to 3.0.10
+
 ## 1.0.2
 
 **New**
